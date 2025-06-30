@@ -1,0 +1,68 @@
+package com.ecommerce.products;
+
+
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ecommerce.category.Category;
+import com.ecommerce.review.Review;
+import com.ecommerce.seller.Seller;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Product {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	private String title;
+	
+	private String description;
+	
+	private int mrpPrice;
+	
+	private int sellingPrice;
+	
+	private int discountPercentage;
+	
+	private int quantity;
+	
+	private int numRatings;
+	
+	private String color;
+	
+	@ElementCollection // It create separate table for images section
+	private List<String> images =new ArrayList<>();
+	
+	@ManyToOne
+	private Seller seller;
+	
+	@ManyToOne
+	private Category category;
+	
+	private LocalDateTime createdAt;
+	
+	private String sizes;
+	
+	@OneToMany(mappedBy = "product" ,cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<Review> reviews = new ArrayList<>();
+}

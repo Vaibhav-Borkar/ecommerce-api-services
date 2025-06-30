@@ -1,0 +1,69 @@
+package com.ecommerce.seller;
+
+import com.ecommerce.address.Address;
+import com.ecommerce.enums.AccountStatus;
+import com.ecommerce.enums.USER_ROLE;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Seller {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	private String sellerName;
+	
+	private String mobile;
+	
+	@Column(unique = true,nullable = false)
+	private String email;
+	
+	private String password;
+	
+	@Embedded
+	private BusinessDetails businessDetails = new BusinessDetails();
+	
+	@Embedded
+	private BankDetails bankDetails = new BankDetails();
+	
+	@OneToOne
+	private Address pickupAddress = new Address();
+	
+	private String GSTIN;
+	
+	private USER_ROLE role = USER_ROLE.ROLE_SELLER;
+	
+	private boolean isEmailVerfied=false;
+	
+	private AccountStatus adAccountStatus = AccountStatus.PENDING_VERIFICATION;
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+
